@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Vista Parlour | Luxury Beauty & Grooming Kisumu</title>
+    
+    <!-- Local SEO Optimization Metas -->
+<meta name="description" content="Premium beauty treatments, precise hair artistry, and executive grooming at Bella Vista Parlour. Located at Juventures Hotel Kondele, along Kibos Road, Kisumu. Book your luxury experience today.">
+<meta name="keywords" content="Bella Vista Parlour, Salon Kisumu, Barber Kondele, Juventures Hotel, Beauty Parlour Kisumu, Hairdressing Kibos Road, Spa Kisumu">
+<meta name="author" content="Bella Vista Parlour">
+    
+    <!-- Open Graph Social Cards -->
+<meta property="og:title" content="Bella Vista Parlour | Luxury Beauty & Grooming Kisumu">
+    <meta property="og:description" content="Experience unparalleled beauty and executive grooming services at Juventures Hotel Kondele.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts: Luxury Serif & Editorial Geometric Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS Script CDN Architecture -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#FFF1F2',
+                            100: '#FFE4E6',
+                            200: '#FECDD3',
+                            600: '#E11D48',
+                            700: '#BE123C',
+                            800: '#991B1B', // Deep Luxury Crimson
+                            900: '#7F1D1D',
+                        },
+                        accent: {
+                            coral: '#F43F5E', // High-Impact Active CTA
+                            slate: '#0F172A',  // Deep background contrast elements
+                            muted: '#64748B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="mobile-first.css">
+</head>
+<body class="bg-[#FDFDFD] text-slate-900 font-sans antialiased overflow-x-hidden">
+
+    <!-- Application Mounting Target -->
+    <div id="root"></div>
+
+    <!-- Production Dependencies Scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Transpiled Core React Component Stack -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Custom Lucide Icon Wrapper Component to support dynamic injection
+        const Icon = ({ name, className = "w-5 h-5", ...props }) => {
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [name]);
+            return <i data-lucide={name} class={className} {...props}></i>;
+        };
+
+        function App() {
+            const [currentPage, setCurrentPage] = useState('home');
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+            const [serviceTab, setServiceTab] = useState('all');
+            const [bookingSuccess, setBookingSuccess] = useState(false);
+            
+            const [bookingForm, setBookingForm] = useState({
+                name: '', phone: '', service: 'Hair Artistry', date: '', time: ''
+            });
+
+            const handlePageChange = (page) => {
+                setCurrentPage(page);
+                setMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            const handleBookingSubmit = (e) => {
+                e.preventDefault();
+                setBookingSuccess(true);
+                setTimeout(() => setBookingSuccess(false), 6000);
+                setBookingForm({ name: '', phone: '', service: 'Hair Artistry', date: '', time: '' });
+            };
+
+            const servicesData = [
+                { id: 1, cat: 'massage', name: 'Executive Deep Tissue Massage', price: 'KES 5,500', dur: '45 Mins', desc: 'Therapeutic deep tissue manipulation targeting muscle tension, stress relief, and improved circulation with premium aromatherapy oils.' },
+                { id: 2, cat: 'massage', name: 'Luxury Hot Stone Massage Experience', price: 'KES 8,500', dur: '90 Mins', desc: 'Heated basalt stones combined with Swedish massage techniques to melt away tension and promote profound relaxation.' },
+                { id: 3, cat: 'skin', name: 'Hydrating Charcoal Facial Treatment', price: 'KES 6,500', dur: '60 Mins', desc: 'Deep pore cleansing with organic charcoal mask, lymphatic drainage massage, and intensive hydration therapy for radiant skin.' },
+                { id: 4, cat: 'massage', name: 'Signature Aromatherapy Massage', price: 'KES 7,500', dur: '75 Mins', desc: 'Custom essential oil blend with full-body Swedish massage techniques to restore balance, reduce stress, and enhance wellbeing.' },
+                { id: 5, cat: 'skin', name: 'Advanced Vitamin C Glow Therapy', price: 'KES 9,500', dur: '45 Mins', desc: 'Medical-grade vitamin C infusion, ultrasonic skin resurfacing, and LED light therapy for youthful, luminous skin.' },
+                { id: 6, cat: 'massage', name: 'Premium Couples Retreat Package', price: 'KES 11,000', dur: '120 Mins', desc: 'Extended luxury massage experience for two with synchronized techniques, champagne, and private relaxation suite access.' }
+            ];
+
+            const filteredServices = serviceTab === 'all' ? servicesData : servicesData.filter(s => s.cat === serviceTab);
+
+            return (
+                <div class="flex flex-col min-h-screen selection:bg-brand-100 selection:text-brand-800">
+                    
+                    {/* GLOBAL NAVIGATION HEADER */}
+                    <nav class="glass-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="flex items-center justify-between h-20">
+                                <a href="index.html" class="logo-container">
+<img src="Bella Logo.png" alt="Bella Vista Parlour Logo" class="logo-icon" />
+                                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+                                        Bella Vista <span class="text-brand-800">Parlour</span>
+                                    </span>
+                                </a>
+
+                                {/* Desktop Link Framework */}
+                                <div class="hidden md:flex items-center space-x-8 font-medium text-slate-600 text-[15px]">
+                                {[
+                                    { name: 'home', href: 'index.html' },
+                                    { name: 'services', href: 'services.html' },
+                                    { name: 'about', href: 'about.html' },
+                                    { name: 'blog', href: 'Blog.html' },
+                                    { name: 'contact', href: 'contact.html' }
+                                ].map((page) => (
+                                    <a 
+                                        key={page.name}
+                                        href={page.href}
+                                        class={`capitalize transition-colors hover:text-brand-800 ${currentPage === page.name ? 'text-brand-800 font-semibold' : ''}`}
+                                    >
+                                        {page.name}
+                                    </a>
+                                ))}
+                                </div>
+
+                                <div class="hidden md:block">
+                                    <button onClick={() => handlePageChange('contact')} class="bg-accent-coral hover:bg-brand-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 transform active:scale-95 shadow-lg shadow-accent-coral/10">
+                                        Book Appointment
+                                    </button>
+                                </div>
+
+                                {/* Mobile Toggle Button */}
+                                <div class="md:hidden">
+                                    <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} class="text-slate-700 hover:text-brand-800 p-2 focus:outline-none">
+                                        <Icon name={mobileMenuOpen ? "x" : "menu"} class="w-6 h-6" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Mobile Drawer Overlay Links */}
+                        {mobileMenuOpen && (
+                            <div class="md:hidden border-t border-brand-50 bg-white/95 backdrop-blur-lg px-4 pt-4 pb-6 space-y-3 shadow-xl animate-fadeIn">
+                                {[
+                                    { name: 'home', href: 'index.html' },
+                                    { name: 'services', href: 'services.html' },
+                                    { name: 'about', href: 'about.html' },
+                                    { name: 'blog', href: 'Blog.html' },
+                                    { name: 'contact', href: 'contact.html' }
+                                ].map((page) => (
+                                    <a 
+                                        key={page.name}
+                                        href={page.href}
+                                        class={`block w-full text-left capitalize py-3 px-4 rounded-xl text-base font-medium ${currentPage === page.name ? 'bg-brand-50 text-brand-800 font-bold' : 'text-slate-600 hover:bg-slate-50'}`}
+                                    >
+                                        {page.name}
+                                    </a>
+                                ))}
+                                <div class="pt-2">
+                                    <button onClick={() => handlePageChange('contact')} class="w-full text-center bg-brand-800 text-white py-3 rounded-xl font-semibold text-sm shadow-md">
+                                        Book Appointment
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </nav>
+
+                    {/* CORE PAGE VIEWS MOUNT POINT */}
+                    <main class="flex-grow pt-20">
+                        
+                        {/* VIEW 1: HOME PAGE */}
+                        {currentPage === 'home' && (
+                            <div>
+                                {/* Hero Chamber */}
+                                <section class="spa-bg-hero relative pt-12 pb-20 md:py-32 overflow-hidden">
+                                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-brand-100 text-brand-800 tracking-wide uppercase">
+                                                <Icon name="map-pin" class="w-3.5 h-3.5 mr-1.5 text-brand-800" /> Juventures Hotel, Kondele
+                                            </span>
+                                            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-none">
+                                                Discover Pure Relaxation & Luxury, <br/>
+                                                
+                                            </h1>
+                                            <p class="text-slate-900 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
+                                                Welcome to Kisumu's premier massage spa sanctuary. Experience luxury deep tissue therapy, hot stone massages, and aromatherapy treatments designed for ultimate relaxation and wellness.
+                                            </p>
+                                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                                                <button onClick={() => handlePageChange('contact')} class="w-full sm:w-auto bg-brand-800 hover:bg-brand-900 text-white px-8 py-4 rounded-xl font-bold shadow-xl shadow-brand-800/10 transition-all flex items-center justify-center">
+                                                    Book Experience <Icon name="arrow-right" class="w-4 h-4 ml-2" />
+                                                </button>
+                                                <button onClick={() => handlePageChange('services')} class="w-full sm:w-auto border-2 border-brand-800 text-brand-800 hover:bg-brand-50 px-8 py-3.5 rounded-xl font-bold transition-all">
+                                                    Explore Services
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Modern Spa Image Gallery */}
+                                        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                                            <div class="space-y-4">
+                                                <div class="h-48 rounded-2xl bg-gradient-to-br from-brand-800 to-brand-900 flex flex-col justify-end p-6 text-white shadow-lg relative overflow-hidden group">
+                                                    <div class="absolute inset-0 bg-black/20"></div>
+                                                    <img src="Hero 1.jfif" alt="Luxury Massage Room" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500" />
+                                                    <div class="relative z-10">
+                                                        <p class="font-serif text-lg font-bold">Deep Tissue Therapy</p>
+                                                        <p class="text-xs text-brand-100 mt-1">Professional muscle relief</p>
+                                                    </div>
+                                                </div>
+                                                <div class="h-64 rounded-2xl bg-slate-900 flex flex-col justify-between text-white shadow-xl relative overflow-hidden group">
+                                                    <img src="m1.jfif" alt="Hot Stone Massage" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-500" />
+                                                    <div class="relative z-10 p-6">
+                                                        <span class="text-xs text-brand-200 uppercase font-bold tracking-widest">Signature</span>
+                                                        <div class="mt-4">
+                                                            <h3 class="font-serif text-xl font-bold mb-1">Hot Stone Experience</h3>
+                                                            <p class="text-xs text-slate-200">Heated basalt stone therapy</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="space-y-4 pt-8">
+                                                <div class="h-64 rounded-2xl bg-brand-50 border border-brand-100 p-6 flex flex-col justify-between text-brand-900 shadow-md relative overflow-hidden group">
+                                                    <img src="aromatheraphy.jfif" alt="Aromatherapy Massage" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-500" />
+                                                    <div class="relative z-10">
+                                                        <Icon name="sparkles" class="w-6 h-6 text-brand-800" />
+                                                        <div class="mt-4">
+                                                            <h3 class="font-serif text-xl font-bold text-slate-900 mb-1">Aromatherapy</h3>
+                                                            <p class="text-xs text-slate-600">Essential oil relaxation</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="h-48 rounded-2xl bg-gradient-to-tr from-accent-coral to-brand-700 flex flex-col justify-end p-6 text-white shadow-lg relative overflow-hidden group">
+                                                    <img src="couple 1.jfif" alt="Couples enjoying luxury massage retreat" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-500" />
+                                                    <div class="relative z-10">
+                                                        <p class="font-serif text-lg font-bold">Couples Retreat</p>
+                                                        <p class="text-xs text-brand-100 mt-1">Shared luxury experience</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* Value Propositions Ribbon */}
+                                <section class="spa-bg-section border-y border-brand-100 py-8">
+                                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+                                        <div class="flex flex-col md:flex-row items-center md:items-start p-2 space-y-3 md:space-y-0 md:space-x-4">
+                                            <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-brand-800 shrink-0"><Icon name="shield-check" class="w-6 h-6" /></div>
+                                            <div><h4 class="font-bold text-slate-900">Uncompromised Hygiene</h4><p class="text-xs text-slate-500 mt-0.5">Strict multi-stage autoclave medical grade instrument sterilizations.</p></div>
+                                        </div>
+                                        <div class="flex flex-col md:flex-row items-center md:items-start p-2 space-y-3 md:space-y-0 md:space-x-4">
+                                            <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-brand-800 shrink-0"><Icon name="users" class="w-6 h-6" /></div>
+                                            <div><h4 class="font-bold text-slate-900">Certified Massues</h4><p class="text-xs text-slate-500 mt-0.5">Highly accomplished aesthetic professionals mapping unique styles.</p></div>
+                                        </div>
+                                        <div class="flex flex-col md:flex-row items-center md:items-start p-2 space-y-3 md:space-y-0 md:space-x-4">
+                                            <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-brand-800 shrink-0"><Icon name="car" class="w-6 h-6" /></div>
+                                            <div><h4 class="font-bold text-slate-900">Ample Secured Parking</h4><p class="text-xs text-slate-500 mt-0.5">Conveniently situated inside Juventures Hotel with 24/7 guarded parking access.</p></div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* Highlight Teaser Showcase */}
+                                <section class="spa-bg-section py-20">
+                                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                    <div class="text-center max-w-xl mx-auto mb-12">
+                                        <h2 class="font-serif text-3xl md:text-4xl font-bold">Signature Treatment Packages</h2>
+                                        <p class="text-sm text-slate-500 mt-2">A glance at our elite treatments designed for maximum aesthetic impact.</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                        {servicesData.slice(0, 3).map(service => (
+                                            <div key={service.id} class="bento-card bg-white rounded-2xl border border-slate-100 p-6 flex flex-col justify-between shadow-sm">
+                                                <div>
+                                                    <div class="flex items-center justify-between mb-4">
+                                                        <span class="text-xs font-bold text-brand-800 px-2.5 py-1 rounded-md bg-brand-50 uppercase tracking-wider">{service.cat}</span>
+                                                        <span class="text-xs text-slate-400 flex items-center"><Icon name="clock" class="w-3.5 h-3.5 mr-1" /> {service.dur}</span>
+                                                    </div>
+                                                    <h3 class="font-serif text-lg font-bold text-slate-900 mb-2">{service.name}</h3>
+                                                    <p class="text-xs text-slate-600 leading-relaxed font-light mb-4">{service.desc}</p>
+                                                </div>
+                                                <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                                                    <span class="font-bold text-brand-800 text-lg">{service.price}</span>
+                                                    <button onClick={() => handlePageChange('contact')} class="text-xs font-bold text-slate-900 hover:text-brand-800 flex items-center transition-colors">
+                                                        Book Option <Icon name="chevron-right" class="w-3.5 h-3.5 ml-0.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    </div>
+                                </section>
+                            </div>
+                        )}
+
+                        {/* VIEW 2: SERVICES VIEW */}
+                        {currentPage === 'services' && (
+                            <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+                                <div class="text-center max-w-xl mx-auto mb-12">
+                                    <h1 class="font-serif text-4xl font-bold text-slate-900">Our Artisanal Catalogue</h1>
+                                    <p class="text-slate-500 text-sm mt-2">Carefully conceptualized care options using world-class organic serums and expert artistic craft.</p>
+                                    
+                                    {/* Categorization Tab Ribbons */}
+                                    <div class="flex flex-wrap justify-center gap-2 mt-8 bg-slate-100/80 p-1.5 rounded-xl max-w-md mx-auto">
+                                        {['all', 'hair', 'skin', 'nail'].map((tab) => (
+                                            <button
+                                                key={tab}
+                                                onClick={() => setServiceTab(tab)}
+                                                class={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${serviceTab === tab ? 'bg-brand-800 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'}`}
+                                            >
+                                                {tab === 'all' ? 'All Menus' : tab}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {filteredServices.map(service => (
+                                        <div key={service.id} class="bento-card bg-white rounded-2xl border border-slate-100 p-6 flex flex-col justify-between shadow-sm relative overflow-hidden">
+                                            <div>
+                                                <div class="flex items-center justify-between mb-4">
+                                                    <span class="text-[10px] font-bold text-brand-800 px-2.5 py-1 rounded-md bg-brand-50 uppercase tracking-widest">{service.cat} care</span>
+                                                    <span class="text-xs text-slate-400 flex items-center"><Icon name="clock" class="w-3.5 h-3.5 mr-1" /> {service.dur}</span>
+                                                </div>
+                                                <h3 class="font-serif text-xl font-bold text-slate-900 mb-2">{service.name}</h3>
+                                                <p class="text-xs text-slate-600 leading-relaxed font-light mb-6">{service.desc}</p>
+                                            </div>
+                                            <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                                                <div>
+                                                    <span class="block text-[10px] text-slate-400 uppercase font-medium">Investment</span>
+                                                    <span class="font-bold text-brand-800 text-xl">{service.price}</span>
+                                                </div>
+                                                <button onClick={() => handlePageChange('contact')} class="bg-slate-900 hover:bg-brand-800 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors">
+                                                    Reserve Session
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {/* VIEW 3: ABOUT VISION PAGE */}
+                        {currentPage === 'about' && (
+                            <section class="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn space-y-16">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                                    <div class="space-y-4">
+                                        <span class="text-xs font-bold text-brand-800 tracking-widest uppercase">The Foundational Story</span>
+                                        <h1 class="font-serif text-4xl font-bold text-slate-900">Redefining Premium Elegance In Kondele</h1>
+                                        <p class="text-slate-600 text-sm leading-relaxed font-light">
+                                            Established with an uncompromising ethos of creating premium standards, Bella Vista Parlour combines urban luxury aesthetics with high-performance execution. Located inside the prominent Juventures Hotel facility on Kibos Road, we elevate standard beauty frameworks into relaxing, tailored therapy experiences.
+                                        </p>
+                                        <p class="text-slate-600 text-sm leading-relaxed font-light">
+                                            Whether managing clean corporate cuts or designing deep dermal health procedures, our platform emphasizes absolute precision care for each visiting client.
+                                        </p>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-brand-800 to-slate-900 p-8 rounded-2xl text-white shadow-xl space-y-6">
+                                        <h3 class="font-serif text-2xl font-bold text-brand-100">Our Strategic Promise</h3>
+                                        <div class="space-y-4 text-xs font-light text-slate-300">
+                                            <div class="flex items-start"><Icon name="check-circle" class="w-4 h-4 mr-3 text-accent-coral shrink-0 mt-0.5" /><p><strong class="text-white block font-medium">Flawless Product Safety</strong> We strictly deploy certified premium hair solutions and dermally verified organic facial compounds.</p></div>
+                                            <div class="flex items-start"><Icon name="check-circle" class="w-4 h-4 mr-3 text-accent-coral shrink-0 mt-0.5" /><p><strong class="text-white block font-medium">Sanitized Space Execution</strong> Absolute focus on individual protection metrics across all service chairs.</p></div>
+                                            <div class="flex items-start"><Icon name="check-circle" class="w-4 h-4 mr-3 text-accent-coral shrink-0 mt-0.5" /><p><strong class="text-white block font-medium">Reliable Scheduling Focus</strong> Respecting your valuable timeline parameters with zero overlapping appointment delays.</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-8">
+                                    <div class="text-center max-w-xl mx-auto mb-10">
+                                        <h2 class="font-serif text-3xl font-bold">The Craft Masters</h2>
+                                        <p class="text-xs text-slate-500 mt-1">Our elite aesthetic team delivering unmatched services daily in Kisumu.</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                        {[
+                                            { name: 'Marcus Ochieng', role: 'Master Barber & Hair Architect' },
+                                            { name: 'Elena Amina', role: 'Lead Dermal & Skincare Therapist' },
+                                            { name: 'Sasha Kwamboka', role: 'Nail Artisan & Creative Director' }
+                                        ].map((member, idx) => (
+                                            <div key={idx} class="bg-white border border-slate-100 rounded-xl p-5 text-center shadow-sm">
+                                                <div class="w-16 h-16 rounded-full bg-brand-50 text-brand-800 mx-auto flex items-center justify-center font-bold text-lg mb-3">{member.name[0]}</div>
+                                                <h4 class="font-bold text-slate-900 text-sm">{member.name}</h4>
+                                                <p class="text-[11px] text-brand-800 font-medium tracking-wide uppercase mt-0.5">{member.role}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {/* VIEW 4: BLOG CHANNELS */}
+                        {currentPage === 'blog' && (
+                            <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+                                <div class="max-w-xl mb-12">
+                                    <span class="text-xs font-bold text-brand-800 tracking-widest uppercase">Bella Vista Journals</span>
+                                    <h1 class="font-serif text-4xl font-bold text-slate-900 mt-1">Style Insight & Wellness News</h1>
+                                    <p class="text-slate-500 text-sm mt-2">Professional guidance from our expert stylists covering critical skin defenses, clean texture maintenance, and modern grooming rules.</p>
+                                </div>
+
+                                {/* Billboard Feature Article */}
+                                <div class="bg-gradient-to-r from-slate-900 to-brand-900 rounded-3xl p-8 md:p-12 text-white mb-12 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                    <div class="lg:col-span-8 space-y-4">
+                                        <span class="inline-block bg-accent-coral text-white text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-wider">Skincare Guidance</span>
+                                        <h2 class="font-serif text-2xl sm:text-4xl font-bold tracking-tight">Combating Dermal Wetness & Oil Under The Kisumu Heat Shield</h2>
+                                        <p class="text-slate-300 text-xs sm:text-sm font-light max-w-2xl leading-relaxed">
+                                            High humidity levels demand structural shifts in your moisturizing approach. Our head therapist breaks down essential cellular balancing serums to preserve smooth, non-greasy textures without clogging sensitive pores.
+                                        </p>
+                                        <div class="flex items-center space-x-4 text-xs pt-2 text-brand-100">
+                                            <span>July 2026</span>
+                                            <span>•</span>
+                                            <span>5 Min Read Time</span>
+                                        </div>
+                                    </div>
+                                    <div class="lg:col-span-4 flex justify-center lg:justify-end">
+                                        <button onClick={() => handlePageChange('blog')} class="bg-white text-slate-900 font-bold px-6 py-3 rounded-xl text-xs hover:bg-brand-50 transition-colors shadow-lg">
+                                            Read Complete Article
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Standard Journal Grid */}
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                    {[
+                                        { title: 'The Clean Transition: Maintaining Flawless Dreadlocks Cleanliness', cat: 'Hair Care', date: 'June 2026' },
+                                        { title: 'Modern Executive Shaving Rules to Defeat Sharp Razor Bumps Permanently', cat: 'Beard Grooming', date: 'May 2026' },
+                                        { title: 'Choosing Complementary Acrylic & Custom Gel Extensions for Specialized Galas', cat: 'Nail Design', date: 'April 2026' }
+                                    ].map((post, idx) => (
+                                        <div key={idx} class="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm flex flex-col justify-between group cursor-pointer hover:border-brand-200 transition-colors">
+                                            <div>
+                                                <span class="text-[10px] font-bold text-brand-800 tracking-wider uppercase bg-brand-50 px-2.5 py-1 rounded-md">{post.cat}</span>
+                                                <h3 class="font-serif text-lg font-bold text-slate-900 mt-4 group-hover:text-brand-800 transition-colors line-clamp-2">{post.title}</h3>
+                                                <p class="text-xs text-slate-500 font-light mt-2 line-clamp-3">Discover the essential professional methodology to maintain perfect styling integrity between visits to our parlour chairs.</p>
+                                            </div>
+                                            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-6 mt-6 border-t border-slate-50">
+                                                <span>{post.date}</span>
+                                                <span class="font-bold text-slate-900 group-hover:text-brand-800 flex items-center transition-colors">Read <Icon name="arrow-up-right" class="w-3 h-3 ml-0.5" /></span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {/* VIEW 5: CONTACT & BOOKING ENGINE */}
+                        {currentPage === 'contact' && (
+                            <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
+                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                                    
+                                    {/* Left Column: Direct Operations Details */}
+                                    <div class="lg:col-span-5 space-y-8">
+                                        <div>
+                                            <span class="text-xs font-bold text-brand-800 tracking-widest uppercase">Reach Our Team</span>
+                                            <h1 class="font-serif text-4xl font-bold text-slate-900 mt-1">Visit The Parlour</h1>
+                                            <p class="text-slate-500 text-sm mt-2 leading-relaxed font-light">
+                                                Drop in or connect directly to secure emergency treatment adjustments. Walk-ins are smoothly handled depending on chair volume metrics.
+                                            </p>
+                                        </div>
+
+                                        <div class="space-y-4">
+                                            <div class="flex p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
+                                                <div class="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center text-brand-800 shrink-0"><Icon name="map-pin" class="w-5 h-5" /></div>
+                                                <div class="ml-4"><h4 class="font-bold text-sm text-slate-900">Physical Location</h4><p class="text-xs text-slate-600 mt-0.5 font-light">Juventures Hotel Kondele, along Kibos Road, Kisumu, Kenya.</p></div>
+                                            </div>
+                                            <a href="tel:0708856381" class="flex p-4 bg-white border border-slate-100 hover:border-brand-200 rounded-xl shadow-sm transition-colors group block">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-lg bg-brand-50 group-hover:bg-brand-800 group-hover:text-white flex items-center justify-center text-brand-800 shrink-0 transition-colors"><Icon name="phone" class="w-5 h-5" /></div>
+                                                    <div class="ml-4"><h4 class="font-bold text-sm text-slate-900">Direct Telephone Connect</h4><p class="text-xs text-brand-800 mt-0.5 font-semibold">0708856381 (Click to Dial)</p></div>
+                                                </div>
+                                            </a>
+                                            <div class="flex p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
+                                                <div class="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center text-brand-800 shrink-0"><Icon name="clock" class="w-5 h-5" /></div>
+                                                <div class="ml-4"><h4 class="font-bold text-sm text-slate-900">Hours of Operation</h4><p class="text-xs text-slate-600 mt-0.5 font-light">Monday – Saturday: 8:00 AM to 8:00 PM <br/>Sundays: 10:00 AM to 6:00 PM</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Right Column: Dynamic Booking Form Framework */}
+                                    <div class="lg:col-span-7 bg-white border border-slate-100 rounded-2xl p-6 sm:p-10 shadow-sm relative">
+                                        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Request Session Timing</h3>
+                                        <p class="text-xs text-slate-500 mb-6">Input your parameters below. Our scheduling manager will reach out instantly to lock your chair allocation.</p>
+                                        
+                                        {bookingSuccess && (
+                                            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl flex items-start animate-fadeIn">
+                                                <Icon name="check-circle" class="w-5 h-5 mr-3 text-emerald-600 shrink-0 mt-0.5" />
+                                                <div>
+                                                    <h5 class="font-bold text-sm">Session Parameters Transmitted Successfully!</h5>
+                                                    <p class="text-xs mt-0.5 font-light">We have locked your scheduling slot request. A confirmation callback is processing to 0708856381 details.</p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <form onSubmit={handleBookingSubmit} class="space-y-4 text-xs">
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <div class="space-y-1.5">
+                                                    <label class="font-semibold text-slate-700 uppercase tracking-wider">Your Full Name</label>
+                                                    <input required type="text" value={bookingForm.name} onChange={e => setBookingForm({...bookingForm, name: e.target.value})} placeholder="e.g. Twalib Faruk" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-800 text-sm font-light bg-slate-50/50" />
+                                                </div>
+                                                <div class="space-y-1.5">
+                                                    <label class="font-semibold text-slate-700 uppercase tracking-wider">Mobile Number</label>
+                                                    <input required type="tel" value={bookingForm.phone} onChange={e => setBookingForm({...bookingForm, phone: e.target.value})} placeholder="e.g. 0700000000" class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-800 text-sm font-light bg-slate-50/50" />
+                                                </div>
+                                            </div>
+                                            <div class="space-y-1.5">
+                                                <label class="font-semibold text-slate-700 uppercase tracking-wider">Target Treatment Focus</label>
+                                                <select value={bookingForm.service} onChange={e => setBookingForm({...bookingForm, service: e.target.value})} class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-800 text-sm font-light bg-slate-50/50">
+                                                    <option>Hair Artistry & Cut</option>
+                                                    <option>Skincare Glow Facial</option>
+                                                    <option>Nail Oasis Gel Treatment</option>
+                                                    <option>Executive Grooming Package</option>
+                                                </select>
+                                            </div>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <div class="space-y-1.5">
+                                                    <label class="font-semibold text-slate-700 uppercase tracking-wider">Target Date</label>
+                                                    <input required type="date" value={bookingForm.date} onChange={e => setBookingForm({...bookingForm, date: e.target.value})} class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-800 text-sm font-light bg-slate-50/50" />
+                                                </div>
+                                                <div class="space-y-1.5">
+                                                    <label class="font-semibold text-slate-700 uppercase tracking-wider">Target Hours Slit</label>
+                                                    <input required type="time" value={bookingForm.time} onChange={e => setBookingForm({...bookingForm, time: e.target.value})} class="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-800 text-sm font-light bg-slate-50/50" />
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="w-full bg-brand-800 hover:bg-brand-900 text-white font-bold py-4 rounded-xl shadow-lg transition-colors tracking-wide text-sm uppercase mt-4">
+                                                Transmit Session Request
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+                    </main>
+
+                    {/* STRUCTURED LOCAL SEO FOOTER */}
+                    <footer class="bg-slate-900 text-white pt-16 pb-8 border-t border-slate-800">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
+                            <div class="md:col-span-5 space-y-4">
+                                <a href="index.html" class="logo-container flex items-center space-x-3">
+                                    <img src="Bella Logo.png" alt="Bella Vista Parlour Logo" class="logo-icon h-10 w-10" />
+                                    <span class="font-serif text-2xl font-bold tracking-tight">Bella Vista <span class="text-accent-coral">Parlour</span></span>
+                                </a>
+                                <p class="text-slate-400 text-xs font-light leading-relaxed max-w-sm">
+                                    Bringing highly focused aesthetic grooming execution and luxury organic skin treatments directly into Kondele, Kisumu. Experience comfort within an elite hospitality ecosystem.
+                                </p>
+                                <div class="flex items-center space-x-4 pt-2 text-slate-400">
+                                    <span class="hover:text-accent-coral cursor-pointer"><Icon name="instagram" class="w-4 h-4" /></span>
+                                    <span class="hover:text-accent-coral cursor-pointer"><Icon name="facebook" class="w-4 h-4" /></span>
+                                    <span class="hover:text-accent-coral cursor-pointer"><Icon name="twitter" class="w-4 h-4" /></span>
+                                </div>
+                            </div>
+                            
+                            <div class="md:col-span-3 space-y-3">
+                                <h4 class="text-xs uppercase font-bold tracking-widest text-slate-300">Quick Portal Routing</h4>
+                                <ul class="text-xs text-slate-400 space-y-2 font-light">
+                                    {[
+                                        { name: 'home', href: 'index.html' },
+                                        { name: 'services', href: 'services.html' },
+                                        { name: 'about', href: 'about.html' },
+                                        { name: 'blog', href: 'Blog.html' },
+                                        { name: 'contact', href: 'contact.html' }
+                                    ].map(page => (
+                                        <li key={page.name}><a href={page.href} class="hover:text-white capitalize transition-colors">{page.name}</a></li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div class="md:col-span-4 space-y-3">
+                                <h4 class="text-xs uppercase font-bold tracking-widest text-slate-300">Verified Location</h4>
+                                <p class="text-xs text-slate-400 font-light leading-relaxed">
+                                    Juventures Hotel Kondele Facility,<br/>
+                                    Along Kibos Road, Kisumu, Kenya.<br/>
+                                    <span class="block text-white font-semibold mt-2">Call Direct: 0708856381</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-light">
+                            <p>© 2026 Bella Vista Parlour. <a href="https://wa.me/+25479979167" target="_blank" rel="noopener noreferrer" class="hover:text-brand-800 transition-colors">Powered by Obondi Group Technologies</a></p>
+                            <p class="mt-2 sm:mt-0">Designed for Premium Hospitality Experience.</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+
+    <!-- Floating WhatsApp Widget -->
+    <a href="https://wa.me/+254708856381" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Chat with us on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+</body>
+</html>
